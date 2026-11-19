@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<title>8_3asaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1115;
+  --surface:#171a21;
+  --surface-2:#1e222b;
+  --border:#2a2f3a;
+  --border-soft:#232833;
+  --text:#e8e6df;
+  --text-muted:#9098a8;
+  --text-dim:#6b7284;
+  --accent:#d4a853;
+  --accent-soft:#f0c46a;
+  --accent-dim:rgba(212,168,83,.12);
+  --green:#7fb069;
+  --green-dim:rgba(127,176,105,.12);
+  --radius:14px;
+  --radius-sm:10px;
+  --font:"Tajawal",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Sans Arabic","Tajawal",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit;}
+::selection{background:var(--accent);color:#0f1115;}
+
+.ambient{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(700px 500px at 15% 10%, rgba(212,168,83,.14), transparent 60%),
+    radial-gradient(600px 450px at 85% 20%, rgba(127,176,105,.10), transparent 60%),
+    radial-gradient(500px 400px at 50% 90%, rgba(240,196,106,.08), transparent 60%);
+  animation:ambientShift 14s ease-in-out infinite alternate;
+}
+@keyframes ambientShift{
+  0%{opacity:.7;transform:translate3d(0,0,0) scale(1);}
+  50%{opacity:1;transform:translate3d(10px,-14px,0) scale(1.05);}
+  100%{opacity:.85;transform:translate3d(-8px,-22px,0) scale(1.02);}
+}
+@media(prefers-reduced-motion:reduce){.ambient{animation:none;}}
+
+.container{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+section{padding:72px 0;position:relative;z-index:1;}
+@media(max-width:600px){section{padding:52px 0;} .container{padding:0 16px;}}
+
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(15,17,21,.9);
+  border-bottom:1px solid var(--border-soft);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+.topbar-inner{
+  max-width:1080px;margin:0 auto;padding:0 20px;
+  height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+@media(max-width:600px){.topbar-inner{padding:0 16px;height:52px;}}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.88rem;color:var(--text);}
+.brand-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 8px var(--green);animation:pulseDot 2.4s ease-in-out infinite;}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+@media(prefers-reduced-motion:reduce){.brand-dot{animation:none;}}
+.nav{display:flex;gap:20px;}
+@media(max-width:820px){.nav{display:none;}}
+.nav a{color:var(--text-muted);text-decoration:none;font-size:.8rem;font-weight:500;transition:color .2s;}
+.nav a:hover{color:var(--accent-soft);}
+
+.hero{padding:56px 0 64px;text-align:center;border-bottom:1px solid var(--border-soft);position:relative;overflow:hidden;}
+@media(max-width:600px){.hero{padding:40px 0 48px;}}
+
+.hero-photos{
+  display:flex;justify-content:center;align-items:center;gap:18px;
+  margin-bottom:22px;
+}
+@media(min-width:600px){.hero-photos{gap:28px;margin-bottom:26px;}}
+.hero-photo{
+  position:relative;width:96px;height:96px;border-radius:50%;
+  padding:3px;
+  background:linear-gradient(135deg,var(--accent),var(--green),var(--accent-soft));
+  flex-shrink:0;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+@media(min-width:600px){.hero-photo{width:130px;height:130px;padding:4px;}}
+.hero-photo:hover{transform:translateY(-4px) scale(1.03);}
+.hero-photo-inner{
+  width:100%;height:100%;border-radius:50%;overflow:hidden;
+  background:var(--surface-2);display:grid;place-items:center;position:relative;
+  box-shadow:0 10px 30px -8px rgba(0,0,0,.6);
+}
+.hero-photo-inner::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.18), transparent 55%);
+  pointer-events:none;z-index:3;
+}
+.hero-photo-fallback{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:2rem;font-weight:800;color:var(--text-dim);
+}
+@media(min-width:600px){.hero-photo-fallback{font-size:2.8rem;}}
+.hero-photo-inner img{
+  position:relative;z-index:2;width:100%;height:100%;object-fit:cover;border-radius:50%;
+}
+.hero-photo-label{
+  position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+  font-size:.68rem;font-weight:700;color:var(--accent-soft);
+  background:var(--surface);border:1px solid var(--border);
+  padding:2px 10px;border-radius:100px;white-space:nowrap;z-index:4;
+}
+@media(min-width:600px){.hero-photo-label{font-size:.75rem;padding:3px 12px;bottom:-12px;}}
+.hero-amp{
+  font-size:clamp(1.6rem,6vw,2.4rem);color:var(--accent);font-weight:400;
+  animation:ampPulse 3.5s ease-in-out infinite;
+}
+@keyframes ampPulse{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.12);}}
+@media(prefers-reduced-motion:reduce){.hero-amp{animation:none;}}
+
+/* ===== شريط الشلة في الهيرو ===== */
+.hero-crew-strip{
+  margin-bottom:24px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.hero-crew-label{
+  font-size:.7rem;font-weight:600;color:var(--text-dim);
+  letter-spacing:.02em;
+}
+.hero-crew-avatars{
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+  max-width:420px;
+}
+.hero-mini{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  text-decoration:none;width:46px;
+}
+.hero-mini-av{
+  position:relative;width:36px;height:36px;border-radius:50%;
+  overflow:hidden;background:var(--surface-2);
+  border:1.5px solid var(--border);
+  display:grid;place-items:center;
+  transition:transform .25s,border-color .25s;
+}
+.hero-mini:hover .hero-mini-av{
+  transform:translateY(-2px) scale(1.06);
+  border-color:var(--accent);
+}
+.hero-mini-av img{
+  position:relative;z-index:2;width:100%;height:100%;object-fit:cover;
+}
+.hero-mini-fb{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:.85rem;font-weight:800;color:var(--text-dim);
+}
+.hero-mini-name{
+  font-size:.56rem;font-weight:600;color:var(--text-muted);
+  white-space:nowrap;
+}
+@media(min-width:600px){
+  .hero-mini{width:54px;}
+  .hero-mini-av{width:42px;height:42px;}
+  .hero-mini-name{font-size:.64rem;}
+  .hero-crew-avatars{max-width:480px;gap:10px;}
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.75rem;font-weight:600;color:var(--accent-soft);
+  border:1px solid rgba(212,168,83,.3);
+  background:var(--accent-dim);
+  padding:6px 14px;border-radius:100px;margin-bottom:20px;
+}
+.hero-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--accent-soft);box-shadow:0 0 8px var(--accent-soft);animation:pulseDot 2s infinite;}
+@media(prefers-reduced-motion:reduce){.hero-badge-dot{animation:none;}}
+.hero h1{
+  font-size:clamp(2.2rem,9vw,4.2rem);
+  font-weight:900;line-height:1.1;letter-spacing:-.02em;
+  color:var(--text);margin-bottom:12px;
+}
+.hero h1 .amp{color:var(--accent);font-weight:400;margin:0 .08em;}
+.hero-sub{font-size:clamp(.95rem,3vw,1.15rem);color:var(--text-muted);font-weight:500;margin-bottom:8px;}
+.hero-meta{font-size:clamp(.78rem,2.6vw,.88rem);color:var(--text-dim);font-weight:500;}
+.hero-meta b{color:var(--green);font-weight:700;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:10px 20px;border-radius:var(--radius-sm);
+  font-size:.84rem;font-weight:600;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  transition:background .2s,border-color .2s,color .2s,transform .2s;
+  -webkit-tap-highlight-color:transparent;
+  white-space:nowrap;
+}
+.btn:hover{border-color:var(--accent);color:var(--accent-soft);transform:translateY(-1px);}
+.btn:active{transform:translateY(0);background:var(--surface-2);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#0f1115;font-weight:700;box-shadow:0 6px 20px -8px rgba(212,168,83,.6);}
+.btn.primary:hover{background:var(--accent-soft);border-color:var(--accent-soft);color:#0f1115;box-shadow:0 8px 24px -8px rgba(240,196,106,.7);}
+.btn.sm{padding:7px 14px;font-size:.78rem;}
+.btn.ghost{background:transparent;}
+
+.sec-head{text-align:center;margin-bottom:40px;}
+@media(max-width:600px){.sec-head{margin-bottom:28px;}}
+.sec-head h2{
+  font-size:clamp(1.35rem,5vw,2rem);font-weight:800;letter-spacing:-.01em;
+  color:var(--text);margin-bottom:6px;
+}
+.sec-head h2 .hl{color:var(--accent-soft);}
+.sec-head h2 .grn{color:var(--green);}
+.sec-head p{font-size:.88rem;color:var(--text-muted);max-width:520px;margin:0 auto;}
+
+.cd-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+  max-width:720px;margin:0 auto;
+}
+@media(max-width:520px){.cd-grid{gap:8px;}}
+.cd-cell{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px 6px 14px;text-align:center;
+  transition:border-color .3s, transform .3s;
+}
+.cd-cell:hover{border-color:rgba(212,168,83,.4);transform:translateY(-2px);}
+@media(max-width:520px){.cd-cell{padding:16px 4px 10px;}}
+.cd-num{
+  font-family:var(--font-mono);
+  font-size:clamp(1.7rem,7.5vw,2.8rem);
+  font-weight:700;line-height:1;color:var(--accent-soft);
+  font-variant-numeric:tabular-nums;direction:ltr;
+  text-shadow:0 0 20px rgba(240,196,106,.25);
+}
+.cd-label{font-size:.72rem;font-weight:500;color:var(--text-dim);margin-top:8px;}
+.cd-caption{text-align:center;font-size:.85rem;color:var(--text-muted);margin-bottom:20px;font-weight:500;}
+.mission-complete{
+  display:none;text-align:center;
+  font-size:clamp(1.2rem,5vw,1.8rem);font-weight:800;
+  padding:28px 16px;border-radius:var(--radius);
+  background:var(--accent-dim);
+  border:1px solid rgba(212,168,83,.35);
+  color:var(--accent-soft);
+  max-width:720px;margin:0 auto;
+}
+.mission-complete.show{display:block;}
+
+.prog-grid{display:grid;gap:40px;align-items:center;grid-template-columns:1fr;}
+@media(min-width:800px){.prog-grid{grid-template-columns:auto 1fr;gap:56px;}}
+.ring-wrap{position:relative;display:grid;place-items:center;justify-self:center;}
+.ring{width:min(60vw,220px);height:auto;transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:var(--border);stroke-width:10;}
+.ring-fg{fill:none;stroke:var(--accent);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s ease;filter:drop-shadow(0 0 6px rgba(212,168,83,.4));}
+.ring-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;}
+.ring-pct{font-family:var(--font-mono);font-size:clamp(1.5rem,6vw,2.2rem);font-weight:700;color:var(--accent-soft);line-height:1;direction:ltr;}
+.ring-small{font-size:.7rem;color:var(--text-dim);margin-top:4px;}
+.bar-head{display:flex;justify-content:space-between;align-items:baseline;font-size:.82rem;font-weight:500;color:var(--text-muted);margin-bottom:8px;}
+.bar-head b{color:var(--green);font-weight:700;}
+.bar{position:relative;height:20px;border-radius:100px;background:var(--surface);border:1px solid var(--border);overflow:hidden;}
+.bar-fill{height:100%;width:0%;border-radius:100px;background:linear-gradient(90deg,var(--green),var(--accent));transition:width 1s ease;position:relative;overflow:hidden;}
+.bar-fill::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+  transform:translateX(-100%);animation:shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer{0%{transform:translateX(-100%);}60%,100%{transform:translateX(200%);}}
+@media(prefers-reduced-motion:reduce){.bar-fill::after{animation:none;}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 6px;text-align:center;}
+.stat-v{font-family:var(--font-mono);font-size:clamp(1rem,4vw,1.4rem);font-weight:700;color:var(--text);display:block;line-height:1.2;direction:ltr;}
+.stat-l{font-size:.68rem;color:var(--text-dim);margin-top:4px;}
+
+.cal-legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:18px;font-size:.75rem;font-weight:500;color:var(--text-muted);}
+.cal-legend span{display:inline-flex;align-items:center;gap:6px;}
+.sw{width:9px;height:9px;border-radius:2px;display:inline-block;flex-shrink:0;}
+.sw.done{background:var(--green);}
+.sw.today{background:var(--accent-soft);box-shadow:0 0 6px var(--accent-soft);}
+.sw.future{background:var(--surface-2);border:1px solid var(--border);}
+.sw.ms{background:var(--accent);}
+.cal-controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px;}
+.cal-scroll{
+  --cs:10px;--gap:2px;
+  overflow-x:auto;overflow-y:hidden;
+  padding:4px 2px 12px;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+  direction:ltr;
+}
+@media(max-width:500px){.cal-scroll{--cs:8px;}}
+.cal-scroll::-webkit-scrollbar{height:5px;}
+.cal-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+.cal-inner{width:max-content;margin:0 auto;direction:ltr;}
+.cal-labels{display:grid;grid-auto-flow:column;grid-auto-columns:var(--cs);gap:var(--gap);margin-bottom:4px;height:12px;}
+.cal-label{font-size:7px;font-weight:600;color:var(--text-dim);white-space:nowrap;}
+.cal-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,var(--cs));grid-auto-columns:var(--cs);gap:var(--gap);}
+.cal-cell{width:var(--cs);height:var(--cs);border-radius:2px;background:var(--surface-2);cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.cal-cell.done{background:var(--green);}
+.cal-cell.ms.done{background:var(--accent);}
+.cal-cell.ms.future{box-shadow:inset 0 0 0 1px rgba(212,168,83,.4);}
+.cal-cell.today{background:var(--accent-soft);box-shadow:0 0 0 1.5px #fff,0 0 10px rgba(240,196,106,.8);animation:todayPulse 2s ease-in-out infinite;}
+@keyframes todayPulse{0%,100%{box-shadow:0 0 0 1.5px #fff,0 0 10px rgba(240,196,106,.8);}50%{box-shadow:0 0 0 1.5px #fff,0 0 16px rgba(240,196,106,1);}}
+@media(prefers-reduced-motion:reduce){.cal-cell.today{animation:none;}}
+@media(hover:hover){.cal-cell:hover{box-shadow:0 0 0 1.5px var(--accent-soft);}}
+.cal-tip{
+  position:fixed;z-index:60;pointer-events:none;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);padding:7px 11px;border-radius:8px;
+  font-size:12px;font-weight:500;white-space:nowrap;opacity:0;
+  transform:translate(-50%,-130%) scale(.96);
+  transition:opacity .15s,transform .15s;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);direction:rtl;
+}
+.cal-tip.show{opacity:1;transform:translate(-50%,-130%) scale(1);}
+.cal-tip b{color:var(--accent-soft);}
+
+.months{display:grid;gap:4px;}
+.month{display:grid;grid-template-columns:88px 1fr 42px;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;transition:background .2s;}
+@media(min-width:560px){.month{grid-template-columns:120px 1fr 50px;gap:14px;padding:8px 14px;}}
+@media(hover:hover){.month:hover{background:var(--surface);}}
+.month-name{font-size:.75rem;font-weight:500;color:var(--text-muted);white-space:nowrap;}
+@media(min-width:560px){.month-name{font-size:.82rem;}}
+.month.active .month-name{color:var(--accent-soft);font-weight:600;}
+.month.complete .month-name{color:var(--green);}
+.month-bar{height:7px;border-radius:100px;background:var(--surface);border:1px solid var(--border);overflow:hidden;}
+.month-fill{height:100%;width:0%;border-radius:100px;background:var(--green);transition:width 1s ease;}
+.month.complete .month-fill{background:var(--green);}
+.month.active .month-fill{background:var(--accent);}
+.month-pct{font-family:var(--font-mono);font-size:.7rem;font-weight:600;color:var(--text-dim);text-align:left;direction:ltr;}
+.month.complete .month-pct{color:var(--green);}
+.month.active .month-pct{color:var(--accent-soft);}
+.month-tag{grid-column:1/-1;font-size:.65rem;font-weight:500;color:var(--accent-soft);}
+
+.ms-grid{display:grid;gap:12px;grid-template-columns:1fr;}
+@media(min-width:560px){.ms-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.ms-grid{grid-template-columns:repeat(3,1fr);}}
+.ms-card{
+  position:relative;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px 16px;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+@media(hover:hover){.ms-card:hover{transform:translateY(-3px);border-color:rgba(212,168,83,.35);box-shadow:0 10px 30px -12px rgba(0,0,0,.6);}}
+.ms-card.done{border-color:rgba(127,176,105,.35);background:var(--green-dim);}
+.ms-icon{font-size:1.5rem;line-height:1;margin-bottom:8px;opacity:.4;transition:opacity .3s;}
+.ms-card.done .ms-icon{opacity:1;}
+.ms-day{font-size:.7rem;font-weight:600;color:var(--text-dim);}
+.ms-card.done .ms-day{color:var(--accent-soft);}
+.ms-text{font-size:.9rem;margin:6px 0 10px;color:var(--text-muted);}
+.ms-card.done .ms-text{color:var(--text);}
+.ms-date{font-size:.68rem;font-weight:500;color:var(--text-dim);}
+.ms-status{position:absolute;top:14px;left:14px;font-size:.6rem;font-weight:600;padding:3px 9px;border-radius:100px;border:1px solid var(--border);color:var(--text-dim);}
+.ms-card.done .ms-status{border-color:rgba(127,176,105,.5);color:var(--green);background:rgba(127,176,105,.08);}
+
+.words-box{
+  max-width:760px;margin:0 auto;
+  border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--surface);padding:40px 24px 32px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.words-box::before{
+  content:"";position:absolute;top:-40%;right:-20%;width:60%;height:140%;
+  background:radial-gradient(circle, rgba(212,168,83,.08), transparent 70%);
+  pointer-events:none;animation:ambientShift 12s ease-in-out infinite alternate;
+}
+@media(min-width:768px){.words-box{padding:56px 48px 44px;}}
+.quote-text{font-size:clamp(1.1rem,4vw,1.6rem);font-weight:600;line-height:1.6;color:var(--text);min-height:2.8em;display:flex;align-items:center;justify-content:center;transition:opacity .4s;position:relative;z-index:1;}
+.quote-text.out{opacity:0;}
+.quote-dots{display:flex;gap:5px;justify-content:center;margin-top:20px;position:relative;z-index:1;}
+.qdot{width:5px;height:5px;border-radius:50%;background:var(--border);transition:background .3s, transform .3s;}
+.qdot.on{background:var(--accent-soft);transform:scale(1.4);}
+
+/* ===== CREW (الموسّع لـ 8 أبطال) ===== */
+.crew-grid{
+  display:grid;gap:14px;grid-template-columns:1fr;
+  max-width:1120px;margin:0 auto;
+}
+@media(min-width:620px){.crew-grid{grid-template-columns:repeat(2,1fr);gap:16px;}}
+@media(min-width:1000px){.crew-grid{grid-template-columns:repeat(4,1fr);gap:16px;}}
+.person{
+  position:relative;
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px 16px 20px;text-align:center;background:var(--surface);
+  transition:transform .3s,border-color .3s;
+  display:flex;flex-direction:column;align-items:center;
+}
+@media(hover:hover){.person:hover{transform:translateY(-3px);border-color:rgba(212,168,83,.3);}}
+.crew-grid .person{padding:22px 14px 18px;}
+.avatar{width:96px;height:96px;margin:0 auto 14px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,var(--accent),var(--green));flex-shrink:0;}
+.crew-grid .avatar{width:84px;height:84px;margin-bottom:12px;}
+@media(min-width:1000px){.crew-grid .avatar{width:80px;height:80px;}}
+.avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:var(--surface-2);display:grid;place-items:center;position:relative;}
+.avatar-fallback{position:absolute;inset:0;display:grid;place-items:center;font-size:1.9rem;font-weight:800;color:var(--text-dim);}
+.crew-grid .avatar-fallback{font-size:1.6rem;}
+.avatar-inner img{position:relative;z-index:2;width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.p-name{font-size:clamp(1.1rem,4vw,1.4rem);font-weight:800;color:var(--text);margin-bottom:6px;}
+.crew-grid .p-name{font-size:1.05rem;margin-bottom:5px;}
+.p-status{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:600;color:var(--green);border:1px solid rgba(127,176,105,.35);background:var(--green-dim);padding:3px 9px;border-radius:100px;margin-bottom:8px;}
+.p-status-dot{width:4px;height:4px;border-radius:50%;background:var(--green);animation:pulseDot 2s infinite;flex-shrink:0;}
+.p-role{
+  font-size:.7rem;font-weight:600;color:var(--green);
+  background:var(--green-dim);
+  border:1px solid rgba(127,176,105,.25);
+  padding:4px 11px;border-radius:100px;
+  margin:2px 0 10px;
+  line-height:1.4;
+  display:inline-block;
+}
+.crew-grid .p-role{font-size:.66rem;padding:3px 9px;margin-bottom:8px;}
+.p-quote{font-size:.84rem;color:var(--text-muted);line-height:1.65;margin-bottom:8px;}
+.crew-grid .p-quote{font-size:.78rem;line-height:1.6;}
+.p-badge{display:inline-block;margin-top:auto;font-size:.62rem;font-weight:600;color:var(--accent-soft);border:1px dashed rgba(212,168,83,.4);padding:4px 10px;border-radius:100px;margin-top:10px;}
+
+/* ===== Social links داخل الكارت ===== */
+.social-row{
+  display:flex;justify-content:center;gap:6px;
+  margin-top:10px;flex-wrap:wrap;
+}
+.social-btn{
+  width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface-2);
+  display:grid;place-items:center;text-decoration:none;
+  color:var(--text-muted);
+  transition:transform .2s,border-color .2s,background .2s,color .2s;
+  -webkit-tap-highlight-color:transparent;flex-shrink:0;
+}
+.social-btn svg{width:15px;height:15px;display:block;}
+.social-btn:hover{transform:translateY(-2px) scale(1.08);}
+.social-btn.fb:hover{border-color:#4267B2;color:#4267B2;background:rgba(66,103,178,.14);}
+.social-btn.wa:hover{border-color:#25D366;color:#25D366;background:rgba(37,211,102,.14);}
+.social-btn.ph:hover{border-color:var(--green);color:var(--green);background:var(--green-dim);}
+.social-btn.ig:hover{border-color:#E1306C;color:#E1306C;background:rgba(225,48,108,.14);}
+
+.morale-card{margin:26px auto 0;max-width:560px;background:var(--accent-dim);border:1px solid rgba(212,168,83,.3);border-radius:var(--radius);padding:20px;text-align:center;}
+.morale-label{font-size:.72rem;font-weight:600;color:var(--text-muted);margin-bottom:4px;}
+.morale-value{font-size:clamp(1.4rem,5vw,1.9rem);font-weight:800;color:var(--accent-soft);text-shadow:0 0 20px rgba(240,196,106,.4);}
+.morale-note{font-size:.82rem;color:var(--text-muted);margin-top:4px;}
+
+.finish{text-align:center;}
+.finish h2{font-size:clamp(1.5rem,6vw,2.4rem);font-weight:900;color:var(--text);margin-bottom:10px;}
+.finish-dates{font-size:clamp(.78rem,2.8vw,.9rem);font-weight:500;color:var(--text-muted);margin:14px 0 4px;}
+.finish-stack{display:flex;flex-direction:column;align-items:center;gap:2px;margin:22px auto;max-width:380px;}
+.fs{font-size:clamp(1rem,4vw,1.35rem);font-weight:700;color:var(--text);opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s;}
+.finish-stack.in .fs{opacity:1;transform:none;}
+.finish-stack.in .fs:nth-child(1){transition-delay:.05s;}
+.finish-stack.in .fs:nth-child(2){transition-delay:.15s;}
+.finish-stack.in .fs:nth-child(3){transition-delay:.25s;}
+.finish-stack.in .fs:nth-child(4){transition-delay:.35s;}
+.fs-arrow{color:var(--accent);font-size:.8rem;opacity:.5;}
+.finish-names{font-size:clamp(1.4rem,6vw,2.4rem);font-weight:900;color:var(--text);margin:22px 0 8px;}
+.finish-tag{font-size:clamp(.9rem,3.2vw,1.1rem);color:var(--text-muted);line-height:1.8;}
+
+footer{border-top:1px solid var(--border-soft);padding:40px 0 32px;text-align:center;position:relative;z-index:1;}
+.f1{font-size:.9rem;color:var(--text-muted);margin-bottom:4px;font-weight:500;}
+.f2{font-size:.75rem;color:var(--text-dim);font-weight:500;}
+.heart{color:#e06c75;display:inline-block;animation:heartBeat 1.8s ease-in-out infinite;}
+@keyframes heartBeat{0%,100%{transform:scale(1);}30%{transform:scale(1.2);}60%{transform:scale(.98);}}
+@media(prefers-reduced-motion:reduce){.heart{animation:none;}}
+
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;}
+.modal.open{opacity:1;pointer-events:auto;}
+.modal-backdrop{position:absolute;inset:0;background:rgba(8,9,12,.8);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
+.modal-card{
+  position:relative;z-index:1;width:100%;max-width:400px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:30px 20px 24px;text-align:center;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+  transform:translateY(16px) scale(.97);
+  transition:transform .3s ease;
+  max-height:85vh;overflow-y:auto;
+}
+.modal.open .modal-card{transform:none;}
+.modal-close{position:absolute;top:10px;left:12px;width:30px;height:30px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;color:var(--text-muted);font-size:.85rem;transition:background .2s,color .2s;}
+.modal-close:hover{background:var(--surface-2);color:var(--accent-soft);}
+.modal-icon{font-size:1.8rem;line-height:1;margin-bottom:8px;}
+.modal-card h3{font-size:1.05rem;font-weight:800;color:var(--accent-soft);margin-bottom:16px;}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid var(--border-soft);font-size:.88rem;}
+.mrow:last-child{border-bottom:0;}
+.mrow span{color:var(--text-muted);text-align:right;}
+.mrow b{font-weight:700;color:var(--text);white-space:nowrap;direction:ltr;}
+.mrow b.gold{color:var(--accent-soft);}
+.mrow b.grn{color:var(--green);}
+.modal-quote{font-size:1rem;font-weight:600;color:var(--text);line-height:1.7;margin-bottom:6px;}
+.modal-note{font-size:.82rem;color:var(--text-muted);margin-top:12px;}
+
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120%);
+  background:var(--accent);color:#0f1115;font-weight:700;font-size:.85rem;
+  padding:11px 20px;border-radius:100px;z-index:80;pointer-events:none;
+  transition:transform .4s ease;max-width:90vw;text-align:center;
+  box-shadow:0 12px 30px -8px rgba(212,168,83,.6);
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+}
+
+#bgCanvas{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  opacity:.55;
+}
+@media(prefers-reduced-motion:reduce){#bgCanvas{display:none;}}
+
+.float-emoji{
+  position:fixed;z-index:2;pointer-events:none;
+  font-size:clamp(1.2rem,3vw,2rem);
+  will-change:transform,opacity;
+  animation:floatUp linear forwards;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));
+}
+@keyframes floatUp{
+  0%{transform:translateY(0) rotate(0deg) scale(.6);opacity:0;}
+  12%{opacity:.95;transform:translateY(-10px) rotate(-8deg) scale(1);}
+  50%{transform:translateY(-45vh) rotate(10deg) scale(1.05);opacity:.9;}
+  100%{transform:translateY(-95vh) rotate(-15deg) scale(.8);opacity:0;}
+}
+
+.hero h1{animation:titleBreathe 6s ease-in-out infinite;}
+@keyframes titleBreathe{
+  0%,100%{text-shadow:0 0 0 rgba(212,168,83,0);}
+  50%{text-shadow:0 0 30px rgba(212,168,83,.25);}
+}
+.hero-badge{animation:badgeFloat 4s ease-in-out infinite;}
+@keyframes badgeFloat{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-4px);}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero h1,.hero-badge{animation:none;}
+}
+
+.ms-card::after,.person::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(120deg,transparent 30%,rgba(240,196,106,.08) 50%,transparent 70%);
+  background-size:250% 100%;
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.ms-card:hover::after,.person:hover::after{
+  opacity:1;animation:sparkleSweep 1.2s linear;
+}
+@keyframes sparkleSweep{
+  0%{background-position:200% 0;}
+  100%{background-position:-100% 0;}
+}
+
+.cd-num{transition:transform .2s;}
+.cd-cell.tick .cd-num{animation:tickPop .35s ease;}
+@keyframes tickPop{
+  0%{transform:scale(1);}
+  40%{transform:scale(1.15);color:#fff;}
+  100%{transform:scale(1);}
+}
+
+@keyframes laughWobble{
+  0%,100%{transform:rotate(0) scale(1);}
+  25%{transform:rotate(-8deg) scale(1.12);}
+  75%{transform:rotate(8deg) scale(1.12);}
+}
+.laugh-burst{
+  position:fixed;z-index:3;pointer-events:none;
+  font-size:clamp(2rem,6vw,4rem);
+  animation:laughWobble 1.1s ease-in-out 2;
+  filter:drop-shadow(0 8px 20px rgba(240,196,106,.4));
+}
+
+.heart{position:relative;}
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true"></div>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-dot"></span> موسى والشلة</div>
+    <nav class="nav">
+      <a href="#countdown">العدّاد</a>
+      <a href="#progress">التقدّم</a>
+      <a href="#journey">التقويم</a>
+      <a href="#milestones">المحطات</a>
+      <a href="#crew">الشلة</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="container">
+
+    <!-- الثنائي الأساسي -->
+    <div class="hero-photos">
+      <div class="hero-photo">
+        <div class="hero-photo-inner">
+          <div class="hero-photo-fallback">م</div>
+          <img src="Moussa.jpg" alt="موسى" onerror="this.style.display='none'">
+        </div>
+        <span class="hero-photo-label">موسى</span>
+      </div>
+    </div>
+
+    <!-- شريط الشلة -->
+    <div class="hero-crew-strip">
+      <span class="hero-crew-label">والشلة معانا (7 أبطال) 👇</span>
+      <div class="hero-crew-avatars">
+        <a class="hero-mini" href="#crew" aria-label="فادي">
+          <span class="hero-mini-av"><span class="hero-mini-fb">أ</span><img src="Fadi.jpg" alt="فادي" loading="lazy" onerror="this.style.display='none'"></span>
+          <span class="hero-mini-name">فادي</span>
+        </a>
+        <a class="hero-mini" href="#crew" aria-label="أيمن">
+          <span class="hero-mini-av"><span class="hero-mini-fb">أ</span><img src="Ayman.jpg" alt="أيمن" loading="lazy" onerror="this.style.display='none'"></span>
+          <span class="hero-mini-name">أيمن</span>
+        </a>
+        <a class="hero-mini" href="#crew" aria-label="عمر">
+          <span class="hero-mini-av"><span class="hero-mini-fb">ع</span><img src="Omar.jpg" alt="عمر" loading="lazy" onerror="this.style.display='none'"></span>
+          <span class="hero-mini-name">عمر</span>
+        </a>
+        <a class="hero-mini" href="#crew" aria-label="ابواليل">
+          <span class="hero-mini-av"><span class="hero-mini-fb">م</span><img src="abu.jpg" alt="ابواليل" loading="lazy" onerror="this.style.display='none'"></span>
+          <span class="hero-mini-name">ابواليل</span>
+        </a>
+        <a class="hero-mini" href="#crew" aria-label="إسلام">
+          <span class="hero-mini-av"><span class="hero-mini-fb">إ</span><img src="Eslam.jpg" alt="إسلام" loading="lazy" onerror="this.style.display='none'"></span>
+          <span class="hero-mini-name">إسلام</span>
+        </a>
+        <a class="hero-mini" href="#crew" aria-label="حسام">
+          <span class="hero-mini-av"><span class="hero-mini-fb">ح</span><img src="Hosam.jpg" alt="حسام" loading="lazy" onerror="this.style.display='none'"></span>
+          <span class="hero-mini-name">حسام</span>
+        </a>
+        <a class="hero-mini" href="#crew" aria-label="محسن">
+          <span class="hero-mini-av"><span class="hero-mini-fb">م</span><img src="Mohsen.jpg" alt="محسن" loading="lazy" onerror="this.style.display='none'"></span>
+          <span class="hero-mini-name">محسن</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-badge"><span class="hero-badge-dot"></span>ايام مرفوضه لاكن مفروضه</div>
+    <h1>موسى <span class="amp">&amp;</span> والشلة</h1>
+    <p class="hero-sub">مشوار واحد. مهمة واحدة. وخط نهاية واحد.</p>
+    <p class="hero-meta">من 25 فبراير 2026 → 1 مارس 2028 · <b id="heroTotal">735</b> يوم</p>
+    <div class="hero-actions">
+      <button class="btn primary" data-modal="left">فاضل قد إيه؟</button>
+      <button class="btn" data-modal="done">عدّينا قد إيه؟</button>
+      <button class="btn ghost" data-modal="quote">كلمة تفول القلب</button>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section id="countdown">
+  <div class="container">
+    <div class="sec-head">
+      <h2>فاضل قد إيه على <span class="hl">الحرية؟</span> 🕊️</h2>
+      <p>كل ثانية بتعدي، وكل يوم بيفرق يا دف.</p>
+    </div>
+    <p class="cd-caption" id="cdCaption">عقبال ما نبقى أحرار يارب 🤲</p>
+    <div class="cd-grid" id="cdGrid">
+      <div class="cd-cell"><div class="cd-num" id="cdDays">735</div><div class="cd-label">يوم</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-label">ساعة</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cdMins">00</div><div class="cd-label">دقيقة</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cdSecs">00</div><div class="cd-label">ثانية</div></div>
+    </div>
+    <div class="mission-complete" id="missionComplete">خلصنا يا جدعان! 🎖️🎉</div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<section id="progress">
+  <div class="container">
+    <div class="sec-head">
+      <h2>وصلنا <span class="grn">لفين</span> بقى؟ 📊</h2>
+      <p>حسابها من 25 فبراير 2026 لـ 1 مارس 2028.</p>
+    </div>
+    <div class="prog-grid">
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="ring-bg" cx="100" cy="100" r="86"/>
+          <circle class="ring-fg" id="ringFg" cx="100" cy="100" r="86"/>
+        </svg>
+        <div class="ring-center"><div>
+          <div class="ring-pct" id="ringPct">0.0%</div>
+          <div class="ring-small">خلصنا</div>
+        </div></div>
+      </div>
+      <div>
+        <div class="bar-head"><span>الخط ده يخصل بس</span><b id="barPct">0.0%</b></div>
+        <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+        <div class="stats">
+          <div class="stat"><span class="stat-v" id="statServed">0</span><span class="stat-l">يوم عدّى</span></div>
+          <div class="stat"><span class="stat-v" id="statRemaining">0</span><span class="stat-l">يوم فاضل</span></div>
+          <div class="stat"><span class="stat-v" id="statTotal">0</span><span class="stat-l">إجمالي الأيام</span></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="stat-v" id="statWeeksDone">0</span><span class="stat-l">أسبوع عدّى</span></div>
+          <div class="stat"><span class="stat-v" id="statWeeksLeft">0</span><span class="stat-l">أسبوع فاضل</span></div>
+          <div class="stat"><span class="stat-v" id="statPctLeft">0%</span><span class="stat-l">نسبة الفاضل</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="container">
+    <div class="sec-head">
+      <h2>يوم <span class="hl">بيوم</span> كده 📅</h2>
+      <p>كل مربع ده يوم. كل يوم بتعديه = انتصار. اضغط على أي يوم تشوف تفاصيله.</p>
+    </div>
+    <div class="cal-legend">
+      <span><i class="sw done"></i> عدّى</span>
+      <span><i class="sw today"></i> النهاردة</span>
+      <span><i class="sw future"></i> لسه جاي</span>
+      <span><i class="sw ms"></i> محطة مهمة</span>
+    </div>
+    <div class="cal-controls">
+      <button class="btn sm" id="jumpStart" type="button">🪖 أول يوم</button>
+      <button class="btn sm primary" id="jumpToday" type="button">📍 النهاردة</button>
+      <button class="btn sm" id="jumpEnd" type="button">🏁 آخر يوم</button>
+    </div>
+    <div class="cal-scroll" id="calScroll">
+      <div class="cal-inner">
+        <div class="cal-labels" id="calLabels"></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+    </div>
+    <div class="cal-tip" id="calTip"></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <div class="sec-head">
+      <h2>شهر <span class="grn">بشهر</span> 🗓️</h2>
+      <p>من أول سلام لآخر سلام يا معلم.</p>
+    </div>
+    <div class="months" id="months"></div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section id="milestones">
+  <div class="container">
+    <div class="sec-head">
+      <h2>محطات <span class="hl">تستاهل</span> 🏅</h2>
+      <p>كل محطة بنخلصها نبقى أسود. 💪</p>
+    </div>
+    <div class="ms-grid" id="msGrid"></div>
+  </div>
+</section>
+
+<!-- WORDS -->
+<section id="words">
+  <div class="container">
+    <div class="sec-head">
+      <h2>كلام <span class="hl">يخفف</span> عليك 💬</h2>
+      <p>عشان ساعات كلمة تظبط اليوم كله والله.</p>
+    </div>
+    <div class="words-box">
+      <div class="quote-text" id="quoteText">يوم بيوم وبس.</div>
+      <div class="quote-dots" id="quoteDots"></div>
+      <div class="hero-actions" style="margin-top:24px">
+        <button class="btn primary" data-modal="quote">كلمة تفول القلب ❤️</button>
+        <button class="btn" data-modal="left">فاضل قد إيه؟</button>
+        <button class="btn" data-modal="done">عدّينا قد إيه؟</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREW — الشلة الموسّعة -->
+<section id="crew">
+  <div class="container">
+    <div class="sec-head">
+      <h2>الشلة <span class="grn">بتاعتنا</span> 👥</h2>
+      <p>8 رجالة. عدّاد واحد. صفر استسلام.</p>
+    </div>
+    <div class="crew-grid">
+
+      <!-- ============ موسى ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">م</div>
+          <img src="Moussa.jpg" alt="موسى" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">موسى</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role">📒 اليوميات · 📦 البوسطة · 💰 الماليات</span>
+        <p class="p-quote">"ماسك اليوميات والبوسطة والفلوس لو محتاج حاجة يبقى تعرف تروح لمين 😎"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات موسى -->
+          <a class="social-btn fb" href="https://www.facebook.com/share/1eV7kRYq2d/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/201012932133" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+201012932133" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://www.instagram.com/moussa__dev" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">🪖 جندي المشوار الطويل</span>
+      </article>
+
+      <!-- ============ فادي ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">ف</div>
+          <img src="Fadi.jpg" alt="فادي" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">فادي</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role">🧾 التوصيات</span>
+        <p class="p-quote">"سلطان التوصيات مفيش توصيه بتعدي من تحت ايدو   😂"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات فادي -->
+          <a class="social-btn fb" href="https://www.facebook.com/share/1CZAZpTaDG/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/201120807385" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+201120807385" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://www.instagram.com/fady4631" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">🎖️ رفيق العدّاد</span>
+      </article>
+
+      <!-- ============ أيمن ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">أ</div>
+          <img src="Ayman.jpg" alt="أيمن" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">أيمن</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role"> ماليا وتوزيع</span>
+        <p class="p-quote">"الماليا والتوزيع يعني العساكر في مكانها مفيش تغفيل 📊"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات أيمن -->
+          <a class="social-btn fb" href="https://www.facebook.com/share/1Jz98c2Les/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/201227181296" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+201227181296" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://www.instagram.com/mohsen2312002" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">💰 وزير المالية</span>
+      </article>
+
+      <!-- ============ عمر ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">ع</div>
+          <img src="Omar.jpg" alt="عمر" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">عمر</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role">🛡️ العهدة</span>
+        <p class="p-quote">"أمين العهدة يعني لو ضاع منك افارول مش تشألني عليه عشان شرقاوي 😅"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات عمر -->
+          <a class="social-btn fb" href="https://www.facebook.com/share/1ELjjCEzZB/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/201154842169" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+201154842169" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://www.instagram.com/omarsherif339" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">🛡️ أمين العهدة</span>
+      </article>
+
+      <!-- ============ محمود ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">م</div>
+          <img src="abu.jpg" alt="ابواليل" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">ابواليل</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role">ماليا وتوزيع</span>
+        <p class="p-quote">"شريك أيمن في الماليا الاتنين مع بعض مفيش عسكري هيجلي"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات محمود -->
+          <a class="social-btn fb" href="https://facebook.com/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/201271018244" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+201271018244" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://instagram.com/" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">شريك الماليا</span>
+      </article>
+
+      <!-- ============ إسلام ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">إ</div>
+          <img src="Eslam.jpg" alt="إسلام" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">إسلام</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role">🕵️ شئون تحريات</span>
+        <p class="p-quote">"عينه في كل حتة التحريات مش هزار والراجل ده بيعرف كل حاجة 🕵️"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات إسلام -->
+          <a class="social-btn fb" href="https://www.facebook.com/share/1F4YTmBBEC/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/20120817216" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+20120817216" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://www.instagram.com/7ossam_3del_" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">🕵️ عين الشلة</span>
+      </article>
+
+      <!-- ============ حسام ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">ح</div>
+          <img src="Hosam.jpg" alt="حسام" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">حسام</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role">🐦 رعاية العصافير · 🩺 ممرض</span>
+        <p class="p-quote">"دكتور العصافير لو عصفور تعبان هو اللي بيشوفه ويطمنه 🩺🐦"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات حسام -->
+          <a class="social-btn fb" href="https://www.facebook.com/share/19kai2CxS5/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/201012378559" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+201012378559" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://www.instagram.com/7ossam_3del_" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">🩺 طبيب العصافير</span>
+      </article>
+
+      <!-- ============ محسن ============ -->
+      <article class="person">
+        <div class="avatar"><div class="avatar-inner">
+          <div class="avatar-fallback">م</div>
+          <img src="Mohsen.jpg" alt="محسن" loading="lazy" onerror="this.style.display='none'">
+        </div></div>
+        <h3 class="p-name">محسن</h3>
+        <div class="p-status"><span class="p-status-dot"></span> <span class="js-status">في الخدمة</span></div>
+        <span class="p-role">🐦 رعاية العصافير · 🧮 محاسب</span>
+        <p class="p-quote">"بيربي العصافير ويحسب الفلوس موهبة مزدوجة شغال في الاتنين 🐦🧮"</p>
+        <div class="social-row">
+          <!-- غيّر الروابط دي ببيانات محسن -->
+          <a class="social-btn fb" href="https://www.facebook.com/share/1Jz98c2Les/" target="_blank" rel="noopener" title="فيسبوك" aria-label="فيسبوك">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-btn wa" href="https://wa.me/201015886994" target="_blank" rel="noopener" title="واتساب" aria-label="واتساب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.4.3-.4.8-1.3.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 5 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a class="social-btn ph" href="tel:+201015886994" title="موبايل" aria-label="موبايل">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+          </a>
+          <a class="social-btn ig" href="https://www.instagram.com/eslam_goda_karate" target="_blank" rel="noopener" title="إنستجرام" aria-label="إنستجرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.5-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.5 1.3-.1 1.7-.1 4.9-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.5a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+          </a>
+        </div>
+        <span class="p-badge">🐦 محاسب العصافير</span>
+      </article>
+
+    </div>
+
+    <div class="morale-card">
+      <div class="morale-label">الروح المعنوية 📈</div>
+      <div class="morale-value">100%</div>
+      <div class="morale-note" id="moraleNote">الحمد لله، لسه صامدين. كله هيعدي. 😎</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINISH -->
+<section id="finish" class="finish">
+  <div class="container">
+    <h2>خط النهاية 🏁</h2>
+    <div class="finish-dates">25 فبراير 2026</div>
+    <div class="finish-stack" id="finishStack">
+      <div class="fs">مشوار واحد</div>
+      <div class="fs-arrow">↓</div>
+      <div class="fs">مهمة واحدة</div>
+      <div class="fs-arrow">↓</div>
+      <div class="fs">أخوّة واحدة</div>
+      <div class="fs-arrow">↓</div>
+      <div class="fs">خط نهاية واحد</div>
+    </div>
+    <div class="finish-dates">1 مارس 2028</div>
+    <div class="finish-names">موسى &amp; الشلة</div>
+    <p class="finish-tag">بدينا مع بعض.<br>هنخلص مع بعض. 🤝</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p class="f1">اتعمل بحب لموسى والشلة كلها <span class="heart">❤️</span></p>
+    <p class="f2">يوم أقرب. كله هيعدي.</p>
+    <div style="margin-top:14px">
+      <button class="btn sm" id="shareBtn" type="button">📤 ابعت المشوار لحد</button>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" data-close aria-label="سكّر" type="button">✕</button>
+    <div class="modal-icon" id="modalIcon">🎖️</div>
+    <h3 id="modalTitle">عنوان</h3>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CONFIG = {
+    start: new Date(2026, 1, 25, 0, 0, 0),
+    end:   new Date(2028, 2, 1, 0, 0, 0)
+  };
+  var MS = 86400000;
+  var MONTHS_AR = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+  var MONTHS_AR_SHORT = ["ينا","فبر","مار","أبر","ماي","يون","يول","أغس","سبت","أكت","نوف","ديس"];
+  var TOTAL_DAYS = Math.round((CONFIG.end - CONFIG.start) / MS);
+
+  var QUOTES = [
+    "يوم بيوم وبس. مش محتاج تفكر أبعد من كده.",
+    "بدينا مع بعض وهنخلص مع بعض. مفيش كلام تاني.",
+    "كل شروق بيقربك يوم. اصبر بس يا معلم.",
+    "كمل. خط النهاية مستنيك وأهو شايفه.",
+    "يوم تاني عدّى. الدنيا بقت أحلى والله.",
+    "مع بعض لحد آخر يوم. مفيش استسلام.",
+    "الأيام طويلة بس السنين بتجري. متخافش.",
+    "اصبر النهاردة، حريتك بكرة.",
+    "صاحبين. عدّاد واحد. صفر استسلام.",
+    "خطوات صغيرة بتوصل برضه. متقلقش.",
+    "انت أقوى من الأيام اللي بتحاول تكسرك.",
+    "الشرف بيتكسب شروق ورا شروق.",
+    "اللهم طولك يا روح، بس هنخلص.",
+    "أهو كله بيعدي والله. حتى أصعب الأيام.",
+    "الصبر مفتاح الفرج يا صاحبي.",
+    "الواحد بقى بيعرف قيمة البيت بجد. 😅",
+    "اليوم اللي بيعدي ده كان في يوم حلم.",
+    "اتخيل نفسك بعد سنين بتفتكر الأيام دي وتضحك.",
+    "قلبك جامد. متخليش يوم يهزك.",
+    "الجيش بيعلم الصبر، وانت خلاص اتعلمت.",
+    "روح نام وانت مطمن، ربنا كبير.",
+    "كل حاجة ليها آخر. ده آخرها قريب.",
+    "إحنا 8 مش واحد. والشلة كلها هتوصل مع بعض. 🤝",
+    "من موسى لمحسن، كلنا في نفس المشوار. 💪",
+    "الشلة بجد مش هزار. كله هيعدي وهنبقى خلاص. 🔥",
+    "أيمن وعمر ومحمود وإسلام وحسام ومحسن... وموسى وفادي. الشلة كاملة. 🎖️",
+    "العصافير ليها ناسها، والفلوس ليها ناسها، والحسابات مظبوطة. 😎"
+  ];
+
+  var MORALE_NOTES = [
+    "الحمد لله، لسه صامدين. كله هيعدي. 😎",
+    "زي الفل. الجيش بيعلم الرجالة. 💪",
+    "100% والله. حتى لو تعبان، قلبي جامد.",
+    "معنويات عالية. الصبر طيب. ✨",
+    "متكسرش. يوم ورا يوم وهنبقى خلاص. 🔥",
+    "ماشيين صح. عينك على خط النهاية. 🏁"
+  ];
+
+  var FUNNY_TOASTS = [
+    "يلا بينا نكمل يا جدع 💪",
+    "يوم أقرب للحرية 🕊️",
+    "الحمد لله، عدّى يوم تاني ✨",
+    "الصبر طيب والله 😌",
+    "كله هيعدي يا معلم 🙏",
+    "خليك جامد، انت قدها 🔥"
+  ];
+
+  var $ = function(id){ return document.getElementById(id); };
+  var clamp = function(v,a,b){ return Math.min(b,Math.max(a,v)); };
+  var pad = function(n,l){ return String(n).padStart(l,"0"); };
+
+  function fmtDate(d){
+    return d.getDate() + " " + MONTHS_AR[d.getMonth()] + " " + d.getFullYear();
+  }
+  function fmtMonth(d){
+    return MONTHS_AR[d.getMonth()] + " " + d.getFullYear();
+  }
+
+  function compute(){
+    var now = new Date();
+    var start = CONFIG.start, end = CONFIG.end;
+    var totalMs = end - start;
+    var phase, msLeft, elapsedMs;
+    if (now < start)      { phase = "before"; msLeft = totalMs; elapsedMs = 0; }
+    else if (now >= end)  { phase = "done";   msLeft = 0;       elapsedMs = totalMs; }
+    else                  { phase = "active"; msLeft = end - now; elapsedMs = now - start; }
+
+    var pct = clamp((elapsedMs / totalMs) * 100, 0, 100);
+    var daysRemaining = Math.floor(msLeft / MS);
+    var daysServed = TOTAL_DAYS - daysRemaining;
+    var hoursLeft = Math.floor((msLeft % MS) / 3600000);
+    var minsLeft  = Math.floor((msLeft % 3600000) / 60000);
+    var secsLeft  = Math.floor((msLeft % 60000) / 1000);
+    var currentIndex =
+      phase === "before" ? -1 :
+      phase === "done"   ? TOTAL_DAYS :
+      Math.floor(elapsedMs / MS);
+
+    return { now:now, phase:phase, pct:pct, daysRemaining:daysRemaining, daysServed:daysServed,
+      daysLeft:daysRemaining, hoursLeft:hoursLeft, minsLeft:minsLeft, secsLeft:secsLeft,
+      currentIndex:currentIndex, totalDays:TOTAL_DAYS };
+  }
+
+  var cdDays = $("cdDays"), cdHours = $("cdHours"),
+      cdMins = $("cdMins"), cdSecs = $("cdSecs"),
+      cdGrid = $("cdGrid"), cdCaption = $("cdCaption"),
+      missionComplete = $("missionComplete");
+
+  function setNum(el, value, length){
+    if (!el) return;
+    var str = length > 0 ? pad(value, length) : String(value);
+    if (el.textContent !== str) el.textContent = str;
+  }
+
+  var ringFg = $("ringFg");
+  var CIRC = 2 * Math.PI * 86;
+  if (ringFg) {
+    ringFg.style.strokeDasharray = String(CIRC);
+    ringFg.style.strokeDashoffset = String(CIRC);
+  }
+  var ringPct = $("ringPct"), barPct = $("barPct"), barFill = $("barFill");
+  var statServed = $("statServed"), statRemaining = $("statRemaining"),
+      statTotal = $("statTotal"), statWeeksDone = $("statWeeksDone"),
+      statWeeksLeft = $("statWeeksLeft"), statPctLeft = $("statPctLeft");
+  var heroTotal = $("heroTotal");
+
+  var calGrid = $("calGrid"), calLabels = $("calLabels"),
+      calTip = $("calTip"), calScroll = $("calScroll");
+  var calCells = [], lastCalIndex = -99;
+  var userTouchedCalendar = false;
+
+  var MILESTONE_INDEXES = (function(){
+    var half = Math.floor(TOTAL_DAYS / 2);
+    return new Set([0, 99, half, 364, TOTAL_DAYS - 100, TOTAL_DAYS - 1]);
+  })();
+
+  function buildCalendar(){
+    if (!calGrid || !calLabels) return;
+    var totalCols = Math.ceil(TOTAL_DAYS / 7);
+    var cellFrag = document.createDocumentFragment();
+    var labelFrag = document.createDocumentFragment();
+    calCells = [];
+
+    for (var i = 0; i < TOTAL_DAYS; i++) {
+      var d = new Date(CONFIG.start.getTime() + i * MS);
+      var cell = document.createElement("div");
+      cell.className = "cal-cell";
+      cell.dataset.i = String(i);
+      cell.dataset.day = String(i + 1);
+      cell.dataset.date = fmtDate(d);
+      if (MILESTONE_INDEXES.has(i)) cell.classList.add("ms");
+      cellFrag.appendChild(cell);
+      calCells.push(cell);
+    }
+
+    var lastMonth = -1;
+    for (var c = 0; c < totalCols; c++) {
+      var idx = c * 7;
+      var dd = new Date(CONFIG.start.getTime() + idx * MS);
+      var m = dd.getMonth();
+      var lab = document.createElement("div");
+      lab.className = "cal-label";
+      if (m !== lastMonth) { lab.textContent = MONTHS_AR_SHORT[m]; lastMonth = m; }
+      labelFrag.appendChild(lab);
+    }
+
+    calGrid.innerHTML = ""; calLabels.innerHTML = "";
+    calGrid.appendChild(cellFrag); calLabels.appendChild(labelFrag);
+  }
+
+  function paintCalendar(currentIndex){
+    if (currentIndex === lastCalIndex) return;
+    lastCalIndex = currentIndex;
+    for (var i = 0; i < calCells.length; i++) {
+      var c = calCells[i];
+      c.classList.toggle("done", i < currentIndex);
+      c.classList.toggle("today", i === currentIndex);
+    }
+  }
+
+  var tipTimer = null;
+  function showTip(cell){
+    if (!calTip) return;
+    var r = cell.getBoundingClientRect();
+    var isToday = cell.classList.contains("today");
+    var isDone = cell.classList.contains("done");
+    var status = isToday ? "⭐ النهاردة" : (isDone ? "✅ عدّى" : "⏳ لسه جاي");
+    calTip.innerHTML = "يوم <b>" + cell.dataset.day + "</b> · " + cell.dataset.date + "<br>" + status;
+    calTip.style.left = (r.left + r.width / 2) + "px";
+    calTip.style.top = r.top + "px";
+    calTip.classList.add("show");
+    clearTimeout(tipTimer);
+    tipTimer = setTimeout(hideTip, 2000);
+  }
+  function hideTip(){ if (calTip) calTip.classList.remove("show"); }
+
+  if (calGrid) {
+    var lastTipCell = null;
+    calGrid.addEventListener("pointerover", function(e){
+      if (e.pointerType && e.pointerType !== "mouse") return;
+      var c = e.target.closest(".cal-cell");
+      if (!c || c === lastTipCell) return;
+      lastTipCell = c; showTip(c);
+    });
+    calGrid.addEventListener("pointerout", function(e){
+      if (e.pointerType && e.pointerType !== "mouse") return;
+      lastTipCell = null; hideTip();
+    });
+    calGrid.addEventListener("click", function(e){
+      var c = e.target.closest(".cal-cell");
+      if (!c) return;
+      showDayDetail(c);
+    });
+    calScroll.addEventListener("touchstart", function(){ userTouchedCalendar = true; }, {passive:true});
+    calScroll.addEventListener("wheel", function(){ userTouchedCalendar = true; }, {passive:true});
+  }
+  var scrollRaf = null;
+  window.addEventListener("scroll", function(){
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(function(){ scrollRaf = null; hideTip(); });
+  }, {passive:true});
+
+  function scrollCalTo(idx, smooth){
+    if (!calScroll || idx < 0 || idx >= calCells.length) return;
+    var cell = calCells[idx];
+    if (!cell) return;
+    requestAnimationFrame(function(){
+      var cellLeft = cell.offsetLeft;
+      var cellWidth = cell.offsetWidth;
+      var target = Math.max(0, cellLeft - (calScroll.clientWidth / 2) + (cellWidth / 2));
+      if (smooth && "scrollBehavior" in document.documentElement.style) {
+        try { calScroll.scrollTo({left:target, behavior:"smooth"}); }
+        catch(e){ calScroll.scrollLeft = target; }
+      } else { calScroll.scrollLeft = target; }
+    });
+  }
+
+  var monthsEl = $("months");
+  var monthEls = [];
+  function buildMonths(){
+    if (!monthsEl) return;
+    var list = [];
+    var d = new Date(CONFIG.start.getFullYear(), CONFIG.start.getMonth(), 1);
+    var lastM = new Date(CONFIG.end.getFullYear(), CONFIG.end.getMonth(), 1);
+    while (d <= lastM) {
+      var next = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+      var a = Math.max(d.getTime(), CONFIG.start.getTime());
+      var b = Math.min(next.getTime(), CONFIG.end.getTime());
+      list.push({start:new Date(d), a:a, b:b, isFirst:list.length === 0});
+      d = next;
+    }
+    monthsEl.innerHTML = "";
+    monthEls = [];
+    list.forEach(function(m, i){
+      var isLast = i === list.length - 1;
+      var row = document.createElement("div"); row.className = "month";
+      var name = document.createElement("div"); name.className = "month-name";
+      name.textContent = (m.isFirst ? "🪖 " : "") + fmtMonth(m.start) + (isLast ? " 🏁" : "");
+      var bar = document.createElement("div"); bar.className = "month-bar";
+      var fill = document.createElement("div"); fill.className = "month-fill";
+      bar.appendChild(fill);
+      var pct = document.createElement("div"); pct.className = "month-pct"; pct.textContent = "0%";
+      row.appendChild(name); row.appendChild(bar); row.appendChild(pct);
+      if (m.isFirst) {
+        var tag = document.createElement("div"); tag.className = "month-tag";
+        tag.textContent = "البداية · 25 فبراير 2026"; row.appendChild(tag);
+      }
+      if (isLast) {
+        var tag2 = document.createElement("div"); tag2.className = "month-tag";
+        tag2.textContent = "النهاية · 1 مارس 2028"; row.appendChild(tag2);
+      }
+      monthsEl.appendChild(row);
+      monthEls.push({el:row, fill:fill, pct:pct, a:m.a, b:m.b,
+        lastW:"", lastP:"", lastComplete:null, lastActive:null});
+    });
+  }
+
+  function updateMonths(){
+    if (!monthEls.length) return;
+    var nowT = Date.now(), endT = CONFIG.end.getTime();
+    for (var i = 0; i < monthEls.length; i++) {
+      var m = monthEls[i];
+      var span = m.b - m.a;
+      var p;
+      if (span <= 0) p = nowT >= endT ? 100 : 0;
+      else p = clamp(((nowT - m.a) / span) * 100, 0, 100);
+      var wStr = p.toFixed(2) + "%";
+      if (m.lastW !== wStr) { m.fill.style.width = wStr; m.lastW = wStr; }
+      var pStr = Math.round(p) + "%";
+      if (m.lastP !== pStr) { m.pct.textContent = pStr; m.lastP = pStr; }
+      var isComplete = p >= 99.9;
+      var isActive = p > 0 && p < 99.9;
+      if (m.lastComplete !== isComplete) { m.el.classList.toggle("complete", isComplete); m.lastComplete = isComplete; }
+      if (m.lastActive !== isActive) { m.el.classList.toggle("active", isActive); m.lastActive = isActive; }
+    }
+  }
+
+  var msGrid = $("msGrid");
+  var MILESTONES = [
+    {idx:0,                icon:"🪖", title:"اليوم الأول",     text:"أول يوم. الله يعين. 😅"},
+    {idx:99,               icon:"🎖️", title:"يوم 100",         text:"مية يوم! انت وحش. 💪"},
+    {idx:Math.floor(TOTAL_DAYS/2), icon:"🔥", title:"النص بالظبط", text:"بقى نص المشوار. عاش يا وحش."},
+    {idx:364,              icon:"💪", title:"يوم 365",          text:"سنة كاملة! ما شاء الله."},
+    {idx:TOTAL_DAYS-100,   icon:"🏆", title:"آخر 100 يوم",     text:"فاضل 100 يوم. اقفل بقى."},
+    {idx:TOTAL_DAYS-1,     icon:"🏁", title:"آخر يوم",         text:"خلصت! جبت التايتل. 🎉"}
+  ];
+
+  function buildMilestones(){
+    if (!msGrid) return;
+    msGrid.innerHTML = "";
+    MILESTONES.forEach(function(m){
+      var date = new Date(CONFIG.start.getTime() + m.idx * MS);
+      var card = document.createElement("article");
+      card.className = "ms-card";
+      card.dataset.idx = String(m.idx);
+      card.innerHTML =
+        '<div class="ms-status">لسه جاي</div>' +
+        '<div class="ms-icon">' + m.icon + '</div>' +
+        '<div class="ms-day">' + m.title + '</div>' +
+        '<p class="ms-text">' + m.text + '</p>' +
+        '<div class="ms-date">' + fmtDate(date) + '</div>';
+      msGrid.appendChild(card);
+    });
+  }
+
+  function updateMilestones(currentIndex){
+    if (!msGrid) return;
+    var cards = msGrid.querySelectorAll(".ms-card");
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var idx = parseInt(card.dataset.idx, 10);
+      var done = currentIndex > idx;
+      if (card.classList.contains("done") !== done) {
+        card.classList.toggle("done", done);
+        var st = card.querySelector(".ms-status");
+        if (st) st.textContent = done ? "خلص ✅" : "لسه جاي";
+      }
+    }
+  }
+
+  var quoteText = $("quoteText"), quoteDots = $("quoteDots");
+  var quoteIdx = 0, quoteTimer = null;
+
+  function buildDots(){
+    if (!quoteDots) return;
+    quoteDots.innerHTML = "";
+    QUOTES.forEach(function(_, i){
+      var d = document.createElement("span");
+      d.className = "qdot" + (i === 0 ? " on" : "");
+      quoteDots.appendChild(d);
+    });
+  }
+  function renderQuote(i, animate){
+    if (!quoteText) return;
+    var apply = function(){
+      quoteText.textContent = QUOTES[i];
+      quoteText.classList.remove("out");
+      if (quoteDots) {
+        var dots = quoteDots.children;
+        for (var k = 0; k < dots.length; k++) dots[k].classList.toggle("on", k === i);
+      }
+    };
+    if (!animate) { apply(); return; }
+    quoteText.classList.add("out");
+    setTimeout(apply, 350);
+  }
+  function startQuotes(){
+    stopQuotes();
+    quoteTimer = setInterval(function(){
+      quoteIdx = (quoteIdx + 1) % QUOTES.length;
+      renderQuote(quoteIdx, true);
+    }, 6000);
+  }
+  function stopQuotes(){
+    if (quoteTimer) { clearInterval(quoteTimer); quoteTimer = null; }
+  }
+
+  var moraleNote = $("moraleNote");
+  var moraleTimer = null;
+  function startMorale(){
+    if (!moraleNote || moraleTimer) return;
+    moraleTimer = setInterval(function(){
+      moraleNote.textContent = MORALE_NOTES[Math.floor(Math.random() * MORALE_NOTES.length)];
+    }, 8000);
+  }
+  function stopMorale(){
+    if (moraleTimer) { clearInterval(moraleTimer); moraleTimer = null; }
+  }
+
+  var toast = $("toast");
+  var toastTimer = null;
+  function showToast(msg){
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 3000);
+  }
+  var firstInteraction = true;
+  function triggerFirstToast(){
+    if (!firstInteraction) return;
+    firstInteraction = false;
+    showToast(FUNNY_TOASTS[Math.floor(Math.random() * FUNNY_TOASTS.length)]);
+  }
+  ["click","touchstart","keydown"].forEach(function(ev){
+    document.addEventListener(ev, triggerFirstToast, {once:true, passive:true});
+  });
+
+  function update(){
+    var s = compute();
+
+    if (s.phase === "done") {
+      if (cdGrid) cdGrid.style.display = "none";
+      if (missionComplete) missionComplete.classList.add("show");
+      if (cdCaption) cdCaption.textContent = "المهمة خلصت يا جدعان 🎖️";
+    } else {
+      if (cdGrid) cdGrid.style.display = "";
+      if (missionComplete) missionComplete.classList.remove("show");
+      if (cdCaption) {
+        cdCaption.textContent = s.phase === "before"
+          ? "عقبال ما نبدأ يا صاحبي ⏳"
+          : "عقبال ما نبقى أحرار يارب 🤲";
+      }
+      setNum(cdDays, s.daysLeft, 3);
+      setNum(cdHours, s.hoursLeft, 2);
+      setNum(cdMins, s.minsLeft, 2);
+      setNum(cdSecs, s.secsLeft, 2);
+    }
+
+    var pct = s.pct;
+    var pctStr = pct.toFixed(1) + "%";
+    if (ringPct && ringPct.textContent !== pctStr) ringPct.textContent = pctStr;
+    if (barPct && barPct.textContent !== pctStr) barPct.textContent = pctStr;
+    if (ringFg) ringFg.style.strokeDashoffset = String(CIRC * (1 - pct / 100));
+    if (barFill) barFill.style.width = pct.toFixed(2) + "%";
+
+    if (statServed && statServed.textContent !== String(s.daysServed)) statServed.textContent = String(s.daysServed);
+    if (statRemaining && statRemaining.textContent !== String(s.daysRemaining)) statRemaining.textContent = String(s.daysRemaining);
+    if (statTotal && statTotal.textContent !== String(TOTAL_DAYS)) statTotal.textContent = String(TOTAL_DAYS);
+    if (statWeeksDone && statWeeksDone.textContent !== String(Math.floor(s.daysServed/7))) statWeeksDone.textContent = String(Math.floor(s.daysServed/7));
+    if (statWeeksLeft && statWeeksLeft.textContent !== String(Math.ceil(s.daysRemaining/7))) statWeeksLeft.textContent = String(Math.ceil(s.daysRemaining/7));
+    if (statPctLeft && statPctLeft.textContent !== Math.round(100-pct)+"%") statPctLeft.textContent = Math.round(100-pct)+"%";
+
+    paintCalendar(s.currentIndex);
+    updateMonths();
+    updateMilestones(s.currentIndex);
+  }
+
+  var modal = $("modal"), modalIcon = $("modalIcon"),
+      modalTitle = $("modalTitle"), modalBody = $("modalBody");
+
+  function openModal(icon, title, html){
+    if (!modal) return;
+    modalIcon.textContent = icon;
+    modalTitle.textContent = title;
+    modalBody.innerHTML = html;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal(){
+    if (!modal) return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+  }
+  function row(label, value, cls){
+    return '<div class="mrow"><span>' + label + '</span><b class="' + (cls||"") + '">' + value + '</b></div>';
+  }
+
+  function showLeft(){
+    var s = compute();
+    if (s.phase === "done") {
+      openModal("🎖️","خلصنا يا جدعان!",
+        '<p class="modal-quote">مفيش حاجة فاضلة. جبتها. مبروك عليك. 🎖️</p>' +
+        row("أيام فاضلة","0") +
+        row("حالة الخدمة","خلصت ✅","gold"));
+      return;
+    }
+    if (s.phase === "before") {
+      openModal("⏳","لسه مبدأناش",
+        '<p class="modal-quote">الخدمة لسه مبدأتش. استمتع بالهدوء ده. 😄</p>' +
+        row("أيام للبداية", s.daysLeft, "gold") +
+        row("أسابيع للبداية", Math.ceil(s.daysLeft/7)) +
+        row("شهور (تقريباً)", Math.ceil(s.daysLeft/30.4375)));
+      return;
+    }
+    openModal("⏳","فاضل قد إيه؟",
+      row("أيام فاضلة", s.daysRemaining, "gold") +
+      row("أسابيع فاضلة", Math.ceil(s.daysRemaining/7)) +
+      row("شهور فاضلة (تقريباً)", Math.ceil(s.daysRemaining/30.4375)) +
+      row("نسبة الفاضل", (100-s.pct).toFixed(1)+"%", "gold") +
+      '<p class="modal-note">كمل. خط النهاية مستنيك. 💪</p>');
+  }
+
+  function showDone(){
+    var s = compute();
+    if (s.phase === "before") {
+      openModal("🪖","لسه مبدأناش",
+        '<p class="modal-quote">الخدمة مبدأتش. خد نفسك بقى. 😄</p>' +
+        row("أيام مخلصين","0") + row("أسابيع مخلصين","0") +
+        row("نسبة الإنجاز","0.0%"));
+      return;
+    }
+    openModal("✅","عدّينا قد إيه؟",
+      row("أيام مخلصين", s.daysServed, "grn") +
+      row("أسابيع مخلصين", Math.floor(s.daysServed/7)) +
+      row("شهور مخلصين (تقريباً)", Math.floor(s.daysServed/30.4375)) +
+      row("نسبة الإنجاز", s.pct.toFixed(1)+"%", "grn") +
+      '<p class="modal-note">كل يوم من دول كان انتصار. افتخر. 🎖️</p>');
+  }
+
+  function showQuote(){
+    var q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    openModal("💬","كلمة تفول القلب",
+      '<p class="modal-quote">"' + q + '"</p>' +
+      '<p class="modal-note">اضغط تاني تجيبلك واحدة غيرها.</p>');
+  }
+
+  function showDayDetail(cell){
+    var dayNum = parseInt(cell.dataset.day, 10);
+    var date = cell.dataset.date;
+    var isToday = cell.classList.contains("today");
+    var isDone = cell.classList.contains("done");
+    var icon = isToday ? "⭐" : (isDone ? "✅" : "⏳");
+    var title = isToday ? "النهاردة · يوم " + dayNum : "يوم " + dayNum;
+    var statusText = isToday ? "شغالين فيه دلوقتي" : (isDone ? "عدّى خلاص" : "لسه جاي");
+    var statusCls = isToday ? "gold" : (isDone ? "grn" : "");
+    var week = Math.floor((dayNum-1)/7) + 1;
+    var pct = ((dayNum/TOTAL_DAYS)*100).toFixed(1) + "%";
+
+    openModal(icon, title,
+      row("التاريخ", date) +
+      row("الأسبوع", "الأسبوع " + week) +
+      row("نسبة الإنجاز", pct, "gold") +
+      row("الحالة", statusText, statusCls) +
+      (isToday
+        ? '<p class="modal-note">ده النهاردة. خليه يوم يفرق. 💪</p>'
+        : isDone
+          ? '<p class="modal-note">يوم تاني اتغلب. عاش يا وحش. 🎖️</p>'
+          : '<p class="modal-note">لسه جاي. يوم بيوم وهنوصل. ✨</p>')
+    );
+  }
+
+  document.addEventListener("click", function(e){
+    var jump = e.target.closest("#jumpStart, #jumpToday, #jumpEnd");
+    if (jump) {
+      userTouchedCalendar = true;
+      var s = compute();
+      if (jump.id === "jumpStart") scrollCalTo(0, true);
+      else if (jump.id === "jumpEnd") scrollCalTo(TOTAL_DAYS-1, true);
+      else scrollCalTo(Math.max(0, Math.min(TOTAL_DAYS-1, s.currentIndex)), true);
+      return;
+    }
+  });
+
+  var shareBtn = $("shareBtn");
+  if (shareBtn) {
+    shareBtn.addEventListener("click", function(){
+      var shareData = {
+        title:"الشلة — مشوار واحد",
+        text:"مشوار واحد. مهمة واحدة. وخط نهاية واحد. 🎖️",
+        url:window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(function(){});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href).then(function(){
+          shareBtn.textContent = "✅ اللينك اتنسخ";
+          setTimeout(function(){ shareBtn.textContent = "📤 ابعت المشوار لحد"; }, 2000);
+        });
+      }
+    });
+  }
+
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-modal]");
+    if (t) {
+      var kind = t.getAttribute("data-modal");
+      if (kind === "left") showLeft();
+      else if (kind === "done") showDone();
+      else if (kind === "quote") showQuote();
+      return;
+    }
+    if (e.target.closest("[data-close]")) closeModal();
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeModal();
+  });
+
+  function initFinishStack(){
+    var stack = $("finishStack");
+    if (!stack) return;
+    if (!("IntersectionObserver" in window)) { stack.classList.add("in"); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { stack.classList.add("in"); io.unobserve(stack); }
+      });
+    }, {threshold:0.3});
+    io.observe(stack);
+  }
+
+  var mainInterval = null;
+  function startMainLoop(){ if (mainInterval) return; update(); mainInterval = setInterval(update, 1000); }
+  function stopMainLoop(){ if (mainInterval) { clearInterval(mainInterval); mainInterval = null; } }
+
+  document.addEventListener("visibilitychange", function(){
+    if (document.hidden) { stopMainLoop(); stopQuotes(); stopMorale(); }
+    else { startMainLoop(); startQuotes(); startMorale(); }
+  });
+  window.addEventListener("pagehide", function(){
+    stopMainLoop(); stopQuotes(); stopMorale();
+  });
+
+  function boot(){
+    if (heroTotal) heroTotal.textContent = String(TOTAL_DAYS);
+    buildCalendar();
+    buildMonths();
+    buildMilestones();
+    buildDots();
+    renderQuote(0, false);
+    initFinishStack();
+    update();
+    startMainLoop();
+    startQuotes();
+    startMorale();
+
+    var s = compute();
+    var statusText = "في الخدمة";
+    if (s.phase === "before") statusText = "مستنيين البداية ⏳";
+    if (s.phase === "done")   statusText = "خلصنا يا جدعان 🎖️";
+    document.querySelectorAll(".js-status").forEach(function(el){
+      el.textContent = statusText;
+    });
+
+    var meta = document.querySelector(".hero-meta");
+    if (meta) {
+      meta.innerHTML = "من 25 فبراير 2026 → 1 مارس 2028 · <b>" + TOTAL_DAYS + "</b> يوم";
+    }
+
+    if (s.currentIndex >= 0) {
+      setTimeout(function(){
+        if (!userTouchedCalendar) scrollCalTo(Math.min(s.currentIndex, TOTAL_DAYS-1), false);
+      }, 500);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+
+/* ============================================================
+   LIVE BACKGROUND — جزيئات متحركة + خطوط تواصل
+   ============================================================ */
+(function(){
+  var canvas = document.getElementById('bgCanvas');
+  if (!canvas) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var particles = [];
+  var COLORS = ['#d4a853','#f0c46a','#7fb069','#9098a8'];
+
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    initParticles();
+  }
+
+  function initParticles(){
+    var count = Math.min(60, Math.floor((W*H)/28000));
+    particles = [];
+    for (var i=0;i<count;i++){
+      particles.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: Math.random()*1.8 + .6,
+        vx: (Math.random()-.5)*.25,
+        vy: (Math.random()-.5)*.25,
+        c: COLORS[Math.floor(Math.random()*COLORS.length)],
+        pulse: Math.random()*Math.PI*2
+      });
+    }
+  }
+
+  var mouse = {x:-9999,y:-9999};
+  window.addEventListener('pointermove', function(e){ mouse.x=e.clientX; mouse.y=e.clientY; }, {passive:true});
+  window.addEventListener('pointerleave', function(){ mouse.x=-9999; mouse.y=-9999; });
+
+  function tick(t){
+    ctx.clearRect(0,0,W,H);
+    var i, j, p;
+    for (i=0;i<particles.length;i++){
+      p = particles[i];
+      for (j=i+1;j<particles.length;j++){
+        var q = particles[j];
+        var dx = p.x-q.x, dy = p.y-q.y;
+        var d2 = dx*dx+dy*dy;
+        if (d2 < 14000){
+          var a = (1 - d2/14000) * .12;
+          ctx.strokeStyle = 'rgba(212,168,83,'+a+')';
+          ctx.lineWidth = .6;
+          ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke();
+        }
+      }
+      var mdx = p.x-mouse.x, mdy = p.y-mouse.y;
+      var md2 = mdx*mdx+mdy*mdy;
+      if (md2 < 22000 && md2 > 1){
+        var f = (1 - md2/22000) * .35;
+        p.vx += (mdx/Math.sqrt(md2))*f*.3;
+        p.vy += (mdy/Math.sqrt(md2))*f*.3;
+      }
+      p.vx *= .985; p.vy *= .985;
+      p.x += p.vx; p.y += p.vy;
+      if (p.x<0)p.x=W; if (p.x>W)p.x=0;
+      if (p.y<0)p.y=H; if (p.y>H)p.y=0;
+
+      var glow = .5 + .5*Math.sin(t*.001 + p.pulse);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r*(1+glow*.4),0,Math.PI*2);
+      ctx.fillStyle = p.c;
+      ctx.globalAlpha = .35 + glow*.45;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   ضحك/إيموجي طاير على الشاشة
+   ============================================================ */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  var EMOJIS = [];
+  var lastSpawn = 0;
+
+  function spawnEmoji(x,y){
+    var el = document.createElement('div');
+    el.className = 'float-emoji';
+    el.textContent = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+    var left = (x != null ? x : Math.random()*window.innerWidth);
+    el.style.left = left + 'px';
+    el.style.top = (y != null ? y : window.innerHeight*0.7) + 'px';
+    var dur = 4 + Math.random()*3;
+    el.style.animationDuration = dur + 's';
+    el.style.fontSize = (1.2 + Math.random()*1.6) + 'rem';
+    document.body.appendChild(el);
+    setTimeout(function(){ el.remove(); }, dur*1000 + 100);
+  }
+
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('button, .btn, .cal-cell, .ms-card, .person, .topbar a, .social-btn');
+    if (!t) return;
+    var now = Date.now();
+    if (now - lastSpawn < 120) return;
+    lastSpawn = now;
+
+    var laugh = document.createElement('div');
+    laugh.className = 'laugh-burst';
+    laugh.textContent = [][Math.floor(Math.random()*4)];
+    var r = t.getBoundingClientRect();
+    laugh.style.left = (r.left + r.width/2 - 20) + 'px';
+    laugh.style.top  = (r.top  - 20) + 'px';
+    document.body.appendChild(laugh);
+    setTimeout(function(){ laugh.remove(); }, 2400);
+
+    for (var i=0;i<3;i++){
+      setTimeout(function(){ spawnEmoji(r.left + r.width/2, r.top); }, i*80);
+    }
+  }, {passive:true});
+
+  setInterval(function(){
+    if (document.hidden) return;
+    spawnEmoji();
+  }, 3800);
+
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      var hero = document.querySelector('.hero h1');
+      if (!hero) return;
+      var r = hero.getBoundingClientRect();
+      var laugh = document.createElement('div');
+      laugh.className = 'laugh-burst';
+      laugh.textContent = '';
+      laugh.style.left = (r.right - 30) + 'px';
+      laugh.style.top  = (r.top - 30) + 'px';
+      document.body.appendChild(laugh);
+      setTimeout(function(){ laugh.remove(); }, 2400);
+    }, 800);
+  });
+})();
+
+/* ============================================================
+   تأثير "tick" على العدّاد كل ما الرقم يتغير
+   ============================================================ */
+(function(){
+  function watch(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    var cell = el.closest('.cd-cell');
+    if (!cell) return;
+    var last = el.textContent;
+    setInterval(function(){
+      if (el.textContent !== last){
+        last = el.textContent;
+        cell.classList.remove('tick');
+        void cell.offsetWidth;
+        cell.classList.add('tick');
+      }
+    }, 250);
+  }
+  ['cdSecs','cdMins','cdHours','cdDays'].forEach(watch);
+})();
+
+/* ============================================================
+   Confetti بسيط عند الوصول لخط النهاية
+   ============================================================ */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  var COLORS = ['#d4a853','#f0c46a','#7fb069','#e8e6df','#e06c75'];
+
+  window.burstConfetti = function(){
+    var n = 80;
+    for (var i=0;i<n;i++){
+      (function(){
+        var el = document.createElement('div');
+        el.style.cssText = 'position:fixed;z-index:5;pointer-events:none;width:8px;height:8px;border-radius:2px;left:'+(Math.random()*100)+'vw;top:-20px;background:'+COLORS[Math.floor(Math.random()*COLORS.length)]+';';
+        document.body.appendChild(el);
+        var dur = 2000 + Math.random()*2000;
+        el.animate([
+          {transform:'translate(0,0) rotate(0deg)', opacity:1},
+          {transform:'translate('+((Math.random()-.5)*400)+'px,'+(window.innerHeight+100)+'px) rotate('+(Math.random()*720)+'deg)', opacity:0}
+        ], {duration:dur, easing:'cubic-bezier(.2,.7,.4,1)'});
+        setTimeout(function(){ el.remove(); }, dur);
+      })();
+    }
+  };
+
+  var check = setInterval(function(){
+    var mc = document.getElementById('missionComplete');
+    if (mc && mc.classList.contains('show')){
+      clearInterval(check);
+      window.burstConfetti();
+    }
+  }, 1000);
+})();
+
+</script>
+</body>
+</html>
